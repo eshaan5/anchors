@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Img, List, Text } from "components";
+import RequestCallbackPopupModal from "modals/RequestCallbackPopup";
+import RequestedCallBackModal from "modals/RequestedCallBack";
 
 const EarningPagePage = ({ videos }) => {
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+
   const video = videos[0];
   let newVideos = videos.slice(1);
 
@@ -30,7 +36,7 @@ const EarningPagePage = ({ videos }) => {
             </Text>
           </div>
           <div className="flex flex-col items-start justify-start w-auto">
-            <Button
+            <Button onClick={() => setIsOpen(true)}
               className="cursor-pointer flex items-center justify-center min-w-[260px]"
               leftIcon={
                 <Img
@@ -43,6 +49,8 @@ const EarningPagePage = ({ videos }) => {
             >
               <div className="text-left text-xl">Request a call back</div>
             </Button>
+            <RequestCallbackPopupModal isOpen={isOpen} setIsOpen={setIsOpen} setIsOpen2={setIsOpen2} />
+            <RequestedCallBackModal isOpen={isOpen2} setIsOpen={setIsOpen2} />
           </div>
         </header>
         <div className="bg-black-900 flex flex-col items-center justify-start p-[46px] md:px-10 sm:px-5 w-full">

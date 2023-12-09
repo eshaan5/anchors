@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { default as ModalProvider } from "react-modal";
+import { sendCallback } from "api";
 
 import { Button, Input, Text } from "components";
 
 const RequestCallbackPopupModal = (props) => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [time, setTime] = useState("");
+  const [comments, setComments] = useState("");
+
+  const handleRequestCallback = async () => {
+    try {
+      const response = await sendCallback({ name, phone, time, comments });
+    } catch (error) {
+      console.log(error);
+    }
+    props.setIsOpen(false);
+    props.setIsOpen2(true);
+  };
+
   return (
     <ModalProvider
       appElement={document.getElementById("root")}
@@ -31,14 +47,38 @@ const RequestCallbackPopupModal = (props) => {
                   wrapClassName="w-full"
                   type="text"
                   shape="round"
+                  value={name}
+                  onChange={setName}
                 ></Input>
                 <Input
                   name="mobilenumber"
                   placeholder="Mobile number"
                   className="leading-[normal] p-0 placeholder:text-gray-600 text-left text-xl w-full"
                   wrapClassName="w-full"
-                  type="number"
+                  type="text"
                   shape="round"
+                  value={phone}
+                  onChange={setPhone}
+                ></Input>
+                <Input
+                  name="time"
+                  placeholder="Preffered Time"
+                  className="leading-[normal] p-0 placeholder:text-gray-600 text-left text-xl w-full"
+                  wrapClassName="w-full"
+                  type="time"
+                  shape="round"
+                  value={time}
+                  onChange={setTime}
+                ></Input>
+                <Input
+                  name="comments"
+                  placeholder="Any comments or questions?"
+                  className="leading-[normal] p-0 placeholder:text-gray-600 text-left text-xl w-full"
+                  wrapClassName="w-full"
+                  type="text"
+                  shape="round"
+                  value={comments}
+                  onChange={setComments}
                 ></Input>
               </div>
               <Button
@@ -46,6 +86,7 @@ const RequestCallbackPopupModal = (props) => {
                 shape="round"
                 color="white_A700"
                 variant="fill"
+                onClick={handleRequestCallback}
               >
                 Request a Call Back
               </Button>

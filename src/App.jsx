@@ -11,7 +11,8 @@ function App() {
     day: "numeric",
   };
 
-  const apiKey = "AIzaSyB94TpJN63AEx5ekNIo4y69EOqN3Kr_NYE";
+  const apiKey = import.meta.env.VITE_API_KEY;
+
   const [videoId, setVideoId] = useState("");
   const [videoData, setVideoData] = useState(null);
   const [channelId, setChannelId] = useState("");
@@ -28,7 +29,6 @@ function App() {
   const fetchVideos = async () => {
     try {
       const response = await api.getVideos();
-      console.log(response);
       setVideos(response.data);
     } catch (error) {
       console.log(error);

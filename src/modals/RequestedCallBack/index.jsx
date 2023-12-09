@@ -2,8 +2,13 @@ import React from "react";
 import { default as ModalProvider } from "react-modal";
 
 import { Button, Img, Text } from "components";
+import { Link } from "react-router-dom";
 
 const RequestedCallBackModal = (props) => {
+  const handleClick = () => {
+    props.setIsOpen(false);
+  };
+
   return (
     <ModalProvider
       appElement={document.getElementById("root")}
@@ -46,23 +51,26 @@ const RequestedCallBackModal = (props) => {
                 </Text>
               </div>
             </div>
-            <Button
-              className="cursor-pointer flex items-center justify-center min-w-[305px] rounded-[24px]"
-              rightIcon={
-                <Img
-                  className="h-6 ml-1 my-px"
-                  src="images/img_arrowleft.svg"
-                  alt="arrow_left"
-                />
-              }
-              shape="round"
-              color="red_A700"
-              variant="fill"
-            >
-              <div className="leading-[normal] text-left text-xl">
-                Check another video
-              </div>
-            </Button>
+            <Link to="/">
+              <Button
+                className="cursor-pointer flex items-center justify-center min-w-[305px] rounded-[24px]"
+                onClick={handleClick}
+                rightIcon={
+                  <Img
+                    className="h-6 ml-1 my-px"
+                    src="images/img_arrowleft.svg"
+                    alt="arrow_left"
+                  />
+                }
+                shape="round"
+                color="red_A700"
+                variant="fill"
+              >
+                <div className="leading-[normal] text-left text-xl">
+                  Check another video
+                </div>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
