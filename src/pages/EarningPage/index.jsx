@@ -2,10 +2,9 @@ import React from "react";
 
 import { Button, Img, List, Text } from "components";
 
-const EarningPagePage = ({ video }) => {
-
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const date = new Date(video?.snippet?.publishedAt).toLocaleDateString('en-US', options);
+const EarningPagePage = ({ videos }) => {
+  const video = videos[0];
+  let newVideos = videos.slice(1);
 
   return (
     <>
@@ -68,14 +67,14 @@ const EarningPagePage = ({ video }) => {
                   </Button>
                   <Img
                     className="h-[135px] md:h-auto object-cover rounded-[10px] w-60 sm:w-full"
-                    src={video?.snippet?.thumbnails?.high?.url}
+                    src={video?.img}
                     alt="frameSeven"
                   />
                   <Text
                     className="text-base text-white-A700_7f w-auto"
                     size="txtInterRegular16"
                   >
-                    Uploaded on - {date}
+                    Uploaded on - {video?.date}
                   </Text>
                 </div>
                 <div className="flex flex-col gap-[11px] items-start justify-start w-[255px]">
@@ -83,7 +82,7 @@ const EarningPagePage = ({ video }) => {
                     className="max-w-[255px] md:max-w-full text-white-A700 text-xl"
                     size="txtInterMedium20"
                   >
-                    {video?.snippet?.title}
+                    {video?.title}
                   </Text>
                   <div className="flex flex-col gap-3 items-start justify-start w-auto">
                     <div className="flex flex-row gap-2 items-center justify-start w-auto">
@@ -96,7 +95,7 @@ const EarningPagePage = ({ video }) => {
                         className="text-base text-white-A700_7f w-auto"
                         size="txtInterRegular16"
                       >
-                        {video?.statistics?.viewCount}
+                        {video?.views}
                       </Text>
                     </div>
                     <div className="flex flex-row gap-2 items-center justify-start w-auto">
@@ -109,7 +108,7 @@ const EarningPagePage = ({ video }) => {
                         className="text-base text-white-A700_7f w-auto"
                         size="txtInterRegular16"
                       >
-                        {video?.statistics?.likeCount}
+                        {video?.likes}
                       </Text>
                     </div>
                     <div className="flex flex-row gap-2 items-center justify-start w-auto">
@@ -122,7 +121,7 @@ const EarningPagePage = ({ video }) => {
                         className="text-base text-white-A700_7f w-auto"
                         size="txtInterRegular16"
                       >
-                        {video?.statistics?.commentCount}
+                        {video?.comments}
                       </Text>
                     </div>
                   </div>
@@ -140,10 +139,12 @@ const EarningPagePage = ({ video }) => {
                       className="sm:text-4xl md:text-[38px] text-[40px] text-white-A700 w-auto"
                       size="txtInterBold40"
                     >
-                      {Math.min(Number(video?.statistics?.viewCount), Number(video?.subscribers)) + 5*Number(video?.statistics?.likeCount) + 10*Number(video?.statistics?.commentCount)}
+                      {video?.earnings}
                     </Text>
                   </div>
-                  <Button className="bg-white-A700 h-12 rounded-[24px] w-[42%] text-black-900">Check How?</Button>
+                  <Button className="bg-white-A700 h-12 rounded-[24px] w-[42%] text-black-900">
+                    Check How?
+                  </Button>
                 </div>
               </div>
             </div>
@@ -161,152 +162,107 @@ const EarningPagePage = ({ video }) => {
         >
           <div className="bg-gray-900_01 flex flex-1 sm:flex-col flex-row sm:gap-5 items-center justify-start p-[29px] sm:px-5 w-full">
             <Text
-              className="ml-2.5 sm:ml-[0] text-base text-white-A700"
+              className="ml-2.5 sm:ml-[0] text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               Rank
             </Text>
             <Text
-              className="sm:ml-[0] ml-[79px] text-base text-white-A700"
+              className="sm:ml-[0] ml-[79px] text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               Title
             </Text>
             <Text
-              className="sm:ml-[0] ml-[102px] text-base text-white-A700"
+              className="sm:ml-[0] ml-[102px] text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               Thumbnail
             </Text>
             <Text
-              className="ml-20 sm:ml-[0] text-base text-white-A700"
+              className="ml-20 sm:ml-[0] text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               Views
             </Text>
             <Text
-              className="ml-10 sm:ml-[0] text-base text-white-A700"
+              className="ml-10 sm:ml-[0] text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               Likes
             </Text>
             <Text
-              className="ml-10 sm:ml-[0] text-base text-white-A700"
+              className="ml-10 sm:ml-[0] text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               Comment
             </Text>
             <Text
-              className="ml-10 sm:ml-[0] sm:mt-0 mt-0.5 text-base text-white-A700"
+              className="ml-10 sm:ml-[0] sm:mt-0 mt-0.5 text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               Uploaded on
             </Text>
             <Text
-              className="ml-10 sm:ml-[0] text-base text-white-A700"
+              className="ml-10 sm:ml-[0] text-base text-white-A700 w-[10vw]"
               size="txtInterBold16"
             >
               *Estimated Earning
             </Text>
           </div>
-          <div className="bg-gray-900_7f flex flex-1 sm:flex-col flex-row sm:gap-5 items-center justify-start p-[3px] w-full">
-            <Text
-              className="sm:ml-[0] ml-[51px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              2
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[47px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              Video Title Name
-            </Text>
-            <Img
-              className="sm:flex-1 h-[67px] md:h-auto ml-10 sm:ml-[0] sm:mt-0 mt-[7px] object-cover rounded-[10px] w-[12%] sm:w-full"
-              src="images/img_frame8.png"
-              alt="frameEight"
-            />
-            <Text
-              className="sm:ml-[0] ml-[55px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              123748
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[33px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              12340
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[57px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              1342
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[53px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              June 23, 2023
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[81px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              239893
-            </Text>
-          </div>
-          <div className="bg-gray-900_7f flex flex-1 sm:flex-col flex-row sm:gap-5 items-center justify-start p-[7px] w-full">
-            <Text
-              className="ml-12 sm:ml-[0] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              3
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[46px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              Video Title Name
-            </Text>
-            <Img
-              className="sm:flex-1 h-[67px] md:h-auto ml-10 sm:ml-[0] object-cover rounded-[10px] w-[12%] sm:w-full"
-              src="images/img_frame8.png"
-              alt="frameEight"
-            />
-            <Text
-              className="sm:ml-[0] ml-[55px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              123748
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[33px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              12340
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[57px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              1342
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[53px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              June 23, 2023
-            </Text>
-            <Text
-              className="sm:ml-[0] ml-[81px] text-base text-white-A700_cc"
-              size="txtInterRegular16WhiteA700cc"
-            >
-              239893
-            </Text>
-          </div>
+          {newVideos.map((video, index) => {
+            return (
+              <div key={video._id} className="bg-gray-900_7f flex flex-1 sm:flex-col flex-row sm:gap-5 items-center justify-start p-[3px] w-full">
+                <Text
+                  className="sm:ml-[0] ml-[51px] text-base text-white-A700_cc w-[10vw]"
+                  size="txtInterRegular16WhiteA700cc"
+                >
+                  {index + 2}
+                </Text>
+                <Text
+                  className="sm:ml-[0] ml-[47px] text-base text-white-A700_cc w-[20vw]"
+                  size="txtInterRegular16WhiteA700cc"
+                >
+                  {video.title}
+                </Text>
+                <Img
+                  className="sm:flex-1 h-[67px] md:h-auto ml-10 sm:ml-[0] sm:mt-0 mt-[7px] object-cover rounded-[10px] w-[20vw] sm:w-full"
+                  src={video.img}
+                  alt="frameEight"
+                />
+                <Text
+                  className="sm:ml-[0] ml-[55px] text-base text-white-A700_cc w-[15vw]"
+                  size="txtInterRegular16WhiteA700cc"
+                >
+                  {video.views}
+                </Text>
+                <Text
+                  className="sm:ml-[0] ml-[33px] text-base text-white-A700_cc w-[10vw]"
+                  size="txtInterRegular16WhiteA700cc"
+                >
+                  {video.likes}
+                </Text>
+                <Text
+                  className="sm:ml-[0] ml-[57px] text-base text-white-A700_cc w-[10vw]"
+                  size="txtInterRegular16WhiteA700cc"
+                >
+                  {video.comments}
+                </Text>
+                <Text
+                  className="sm:ml-[0] ml-[53px] text-base text-white-A700_cc w-[10vw]"
+                  size="txtInterRegular16WhiteA700cc"
+                >
+                  {video.date}
+                </Text>
+                <Text
+                  className="sm:ml-[0] ml-[81px] text-base text-white-A700_cc w-[10vw]"
+                  size="txtInterRegular16WhiteA700cc"
+                >
+                  {video.earnings}
+                </Text>
+              </div>
+            );
+          })}
         </List>
       </div>
     </>
